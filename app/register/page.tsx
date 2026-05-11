@@ -20,8 +20,9 @@ export default function RegisterPage() {
     try {
       const res = await api.post('/auth/register', form);
       if (res.success && res.token) {
-        setAuth(res.token, 'customer');
+        setAuth(res.token, 'customer', form.first_name);
         router.push('/');
+        router.refresh();
       } else {
         setError(res.message || 'สมัครสมาชิกไม่สำเร็จ');
       }

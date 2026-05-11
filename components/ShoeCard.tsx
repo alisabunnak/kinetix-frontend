@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 interface ShoeModel {
   _id: string;
   brand: string;
@@ -18,6 +20,7 @@ const brandColors: Record<string, string> = {
 };
 
 export default function ShoeCard({ shoe }: { shoe: ShoeModel }) {
+  const router = useRouter();
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition group">
       {/* Image */}
@@ -58,8 +61,11 @@ export default function ShoeCard({ shoe }: { shoe: ShoeModel }) {
             <div className="text-xs text-green-600 font-medium">ราคาซื้อปกติ</div>
           </div>
         </div>
-        <button className="w-full mt-4 bg-black text-white py-2.5 rounded-xl font-medium hover:bg-gray-800 transition text-sm">
-          เช่าเลย
+        <button
+          onClick={() => router.push(`/shoes/${shoe._id}`)}
+          className="w-full mt-4 bg-black text-white py-2.5 rounded-xl font-medium hover:bg-gray-800 transition text-sm"
+        >
+          เช่าเลย →
         </button>
       </div>
     </div>

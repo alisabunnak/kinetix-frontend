@@ -2,23 +2,27 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { getToken, getRole, clearAuth } from '@/lib/api';
+import { getToken, getRole, getUserName, clearAuth } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [role, setRole] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     setLoggedIn(!!getToken());
     setRole(getRole());
+    setUserName(getUserName());
   }, []);
 
   const handleLogout = () => {
     clearAuth();
     setLoggedIn(false);
+    setUserName(null);
     router.push('/');
+    router.refresh();
   };
 
   return (
@@ -29,13 +33,22 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center gap-4 text-sm">
           <Link href="/" className="text-gray-600 hover:text-black transition">รองเท้า</Link>
+          <Link href="/runclub" className="text-gray-600 hover:text-black transition">Run Club</Link>
+          {loggedIn && (
+            <Link href="/orders" className="text-gray-600 hover:text-black transition">คำสั่งเช่า</Link>
+          )}
           {loggedIn && role === 'admin' && (
             <Link href="/admin" className="text-gray-600 hover:text-black transition">Dashboard</Link>
           )}
           {loggedIn ? (
-            <button onClick={handleLogout} className="bg-black text-white px-4 py-1.5 rounded-full hover:bg-gray-800 transition">
-              ออกจากระบบ
-            </button>
+            <div className="flex items-center gap-3">
+              {userName && (
+                <span className="text-gray-700 font-medium">👋 {userName}</span>
+              )}
+              <button onClick={handleLogout} className="bg-black text-white px-4 py-1.5 rounded-full hover:bg-gray-800 transition text-sm">
+                ออกจากระบบ
+              </button>
+            </div>
           ) : (
             <>
               <Link href="/login" className="text-gray-600 hover:text-black transition">เข้าสู่ระบบ</Link>

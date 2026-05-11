@@ -32,12 +32,19 @@ export function getRole(): string | null {
   return localStorage.getItem('kinetix_role');
 }
 
-export function setAuth(token: string, role: string) {
+export function setAuth(token: string, role: string, name?: string) {
   localStorage.setItem('kinetix_token', token);
   localStorage.setItem('kinetix_role', role);
+  if (name) localStorage.setItem('kinetix_name', name);
+}
+
+export function getUserName(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('kinetix_name');
 }
 
 export function clearAuth() {
   localStorage.removeItem('kinetix_token');
   localStorage.removeItem('kinetix_role');
+  localStorage.removeItem('kinetix_name');
 }

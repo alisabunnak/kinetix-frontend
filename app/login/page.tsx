@@ -19,15 +19,17 @@ export default function LoginPage() {
       // Try customer login first
       const res = await api.post('/auth/login', form);
       if (res.success && res.token) {
-        setAuth(res.token, 'customer');
+        setAuth(res.token, 'customer', res.data?.first_name);
         router.push('/');
+        router.refresh();
         return;
       }
       // Try staff login
       const staffRes = await api.post('/staff/login', form);
       if (staffRes.success && staffRes.token) {
-        setAuth(staffRes.token, staffRes.data?.role || 'staff');
+        setAuth(staffRes.token, staffRes.data?.role || 'staff', staffRes.data?.name);
         router.push('/admin');
+        router.refresh();
         return;
       }
       setError(res.message || 'Email หรือ Password ไม่ถูกต้อง');

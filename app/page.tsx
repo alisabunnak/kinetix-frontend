@@ -31,7 +31,7 @@ export default async function HomePage() {
           เช่ารองเท้าวิ่งพรีเมียม Nike · Adidas · On Running<br />
           ส่งถึงบ้าน รับคืนถึงที่
         </p>
-        <a href="/register" className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition inline-block">
+        <a href="#catalog" className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition inline-block">
           เริ่มเช่าเลย →
         </a>
       </section>
@@ -56,7 +56,7 @@ export default async function HomePage() {
 
       {/* Shoe Catalog */}
       <section className="max-w-6xl mx-auto px-4 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">รองเท้าทั้งหมด</h2>
+        <h2 id="catalog" className="text-2xl font-bold text-gray-900 mb-2">รองเท้าทั้งหมด</h2>
         <p className="text-gray-500 mb-8">เลือกรองเท้าที่ใช่สำหรับคุณ</p>
         {shoes.length === 0 ? (
           <div className="text-center py-16 text-gray-400">
